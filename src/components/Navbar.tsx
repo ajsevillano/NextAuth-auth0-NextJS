@@ -2,11 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 type Props = {};
 
 const Navbar = (props: Props) => {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <nav className="bg-slate-900 flex items-center justify-between px-24 py-3  text-white">
       <Link href="/">
