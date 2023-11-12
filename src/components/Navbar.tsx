@@ -4,28 +4,28 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { getSession, signIn, signOut, useSession } from 'next-auth/react';
+import LoadingScreen from './LoadingScreen';
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-
-  if (status === 'loading') {
-    return <div>Loading...</div>;
-  }
+  const { name, email, image } = session?.user ?? {};
 
   return (
-    <nav className="bg-slate-900 flex items-center justify-between px-24 py-3  text-white">
+    <nav className="bg-slate-900 flex items-center justify-between px-24 py-4  text-white">
       <Link href="/">
         <h1>Next Auth0</h1>
       </Link>
 
+      {status === 'loading' && <LoadingScreen />}
+
       {session?.user ? (
         <div className="flex gap-x-2 items-center">
           <p>
-            {session.user.name} {session.user.email}
+            {name} {email}
           </p>
 
           <Image
-            src={session.user?.image ?? '/default-user-image.png'}
+            src={image ?? '/default-user-image.png'}
             alt="User Image"
             width={30}
             height={30}
