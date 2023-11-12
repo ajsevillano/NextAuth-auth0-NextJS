@@ -1,12 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { getSession, signIn, signOut, useSession } from 'next-auth/react';
 
 const Navbar = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
   return (
     <nav className="bg-slate-900 flex items-center justify-between px-24 py-3  text-white">
       <Link href="/">
@@ -15,7 +20,6 @@ const Navbar = () => {
 
       {session?.user ? (
         <div className="flex gap-x-2 items-center">
-          <Link href="/dashboard">Dashboard</Link>
           <p>
             {session.user.name} {session.user.email}
           </p>
