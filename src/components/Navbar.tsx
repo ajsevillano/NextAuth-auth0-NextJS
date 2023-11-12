@@ -32,7 +32,7 @@ const Navbar = () => {
             className="rounded-full w-8 h-8"
           />
           <button
-            onClick={() => signOut()}
+            onClick={async () => await signOut({ callbackUrl: '/' })}
             className="bg-sky-400 px-3 py-2 rounded-md text-white"
           >
             Sign Out
@@ -40,7 +40,9 @@ const Navbar = () => {
         </div>
       ) : (
         <button
-          onClick={() => signIn()}
+          onClick={async () =>
+            await signIn('auth0', { callbackUrl: '/dashboard' })
+          }
           className="bg-sky-400 px-3 py-2 rounded-md text-white"
         >
           Login
